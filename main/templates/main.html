@@ -1,58 +1,133 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Shopping List Page</h1>
+    <style>
+    .page-wrapper {
+        padding: 20px;
+    }
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+    /* Style the page title */
+    h1 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
+    /* Style the headings */
+    h5 {
+        font-size: 18px;
+        color: #666;
+    }
 
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Date Added</th>
-        </tr>
+    /* Style the paragraphs */
+    p {
+        font-size: 16px;
+        color: #444;
+        margin-bottom: 10px;
+    }
 
-        {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+    /* Style the table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-        {% for product in products %}
+    /* Style the table headers */
+    th {
+        background-color: #333;
+        color: #fff;
+        text-align: left;
+        padding: 10px;
+    }
+
+    /* Style the table rows */
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Style the table cells */
+    td {
+        padding: 10px;
+    }
+
+    /* Style the buttons */
+    button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    /* Add some margin to buttons */
+    button:not(:last-child) {
+        margin-right: 10px;
+    }
+
+    /* Style the last login message */
+    .last-login {
+        font-size: 14px;
+        color: #777;
+        margin-top: 20px;
+    }
+    </style>
+
+    <div class="page-wrapper">
+
+        <h1>Shopping List Page</h1>
+        
+        <h5>Name:</h5>
+        <p>{{name}}</p>
+    
+        <h5>Class:</h5>
+        <p>{{class}}</p>
+    
+        <table>
             <tr>
-                <td>{{product.name}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.date_added}}</td>
-
-                <td>
-                    <a href="{% url 'main:edit_product' product.pk %}">
-                        <button>
-                            Edit
-                        </button>
-                    </a>
-                    <a href="{% url 'main:delete_product' product.pk %}">
-                          <button>
-                              Delete
-                          </button>
-                      </a>
-                </td>
-
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Date Added</th>
             </tr>
-        {% endfor %}
-    </table>
+    
+            {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+    
+            {% for product in products %}
+                <tr>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.date_added}}</td>
+    
+                    <td>
+                        <a href="{% url 'main:edit_product' product.pk %}">
+                            <button>
+                                Edit
+                            </button>
+                        </a>
+                        <a href="{% url 'main:delete_product' product.pk %}">
+                              <button>
+                                  Delete
+                              </button>
+                          </a>
+                    </td>
+    
+                </tr>
+            {% endfor %}
+        </table>
+    
+        <br />
+    
+        <a href="{% url 'main:create_product' %}">
+            <button>
+                Add New Product
+            </button>
+        </a>
+    
+        <p></p>
+        <p>Sesi terakhir login: {{ last_login }}</p>
 
-    <br />
-
-    <a href="{% url 'main:create_product' %}">
-        <button>
-            Add New Product
-        </button>
-    </a>
-
-    <p></p>
-    <p>Sesi terakhir login: {{ last_login }}</p>
+    </div>
 
 {% endblock content %}
 
