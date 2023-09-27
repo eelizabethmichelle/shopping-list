@@ -25,6 +25,20 @@
                 <td>{{product.price}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.date_added}}</td>
+
+                <td>
+                    <a href="{% url 'main:edit_product' product.pk %}">
+                        <button>
+                            Edit
+                        </button>
+                    </a>
+                    <a href="{% url 'main:delete_product' product.pk %}">
+                          <button>
+                              Delete
+                          </button>
+                      </a>
+                </td>
+
             </tr>
         {% endfor %}
     </table>
@@ -37,12 +51,30 @@
         </button>
     </a>
 
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-
-    <a href="{% url 'main:logout' %}">
-        <button>
-            Logout
-        </button>
-    </a>
+    <p></p>
+    <p>Sesi terakhir login: {{ last_login }}</p>
 
 {% endblock content %}
+
+{% block navbar %}
+
+    <nav class="fixed-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col"> 
+                    <div class="navbar-text">
+                        {{name}}
+                    </div>
+                </div>
+
+                <div class ="col-auto">
+                    <form class="container-fluid">
+                        <a href="{% url 'main:logout' %}">
+                            <button class="btn btn-sm btn-outline-secondary" type="button">Logout</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+    </nav>
+
+{% endblock navbar %}
