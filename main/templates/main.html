@@ -178,6 +178,7 @@
                 <th>Price</th>
                 <th>Description</th>
                 <th>Date Added</th>
+                <th>Actions</th>
             </tr>`
             products.forEach((item) => {
                 htmlString += `\n<tr>
@@ -185,6 +186,12 @@
                 <td>${item.fields.price}</td>
                 <td>${item.fields.description}</td>
                 <td>${item.fields.date_added}</td>
+                <td>
+                    <a href='edit-product/${item.pk}'>
+                        <button class="btn btn-primary" onclick="editProduct(${item.pk})">Edit</button>
+                    </a>
+                    <button class="btn btn-danger" onclick="deleteProduct(${item.pk})">Delete</button>
+                </td>
             </tr>` 
             })
             
@@ -193,6 +200,26 @@
 
         function addProduct() {
             fetch("{% url 'main:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function editProduct(productId) {
+            fetch(`{% url 'main:edit_product' 0 %}`.replace("0", productId), {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function deleteProduct(productId) {
+            fetch(`{% url 'main:delete_product' 0 %}`.replace("0", productId), {
                 method: "POST",
                 body: new FormData(document.querySelector('#form'))
             }).then(refreshProducts)
